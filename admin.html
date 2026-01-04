@@ -2,60 +2,142 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Admin - Portal Edu+</title>
+  <title>Portal Edu+ | Admin Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<header>
-  <h1>📊 Admin - Portal Edu+</h1>
-  <p>Visualize alunos, trilhas e quizzes em um painel moderno.</p>
+<header class="admin-header">
+  <h1>⚙️ Portal Edu+ Admin</h1>
+  <p>Painel de demonstração para gestão de alunos, quizzes e KPIs</p>
 </header>
 
-<section class="dashboard">
-  <div class="kpi">
-    <h3>Total de Alunos</h3>
-    <strong id="totalAlunos">0</strong>
+<section class="dashboard-cards">
+  <div class="card">
+    <h3>👨‍🎓 Total de Alunos</h3>
+    <p>152</p>
   </div>
-  <div class="kpi">
-    <h3>Total de Trilhas</h3>
-    <strong id="totalTrilhas">0</strong>
+  <div class="card">
+    <h3>📝 Quizzes Concluídos</h3>
+    <p>478</p>
   </div>
-  <div class="kpi">
-    <h3>Total de Quizzes</h3>
-    <strong id="totalQuizzes">0</strong>
+  <div class="card">
+    <h3>📈 Progresso Médio</h3>
+    <p>82%</p>
+  </div>
+  <div class="card">
+    <h3>💡 Engajamento</h3>
+    <p>95%</p>
   </div>
 </section>
 
-<section class="tabela-alunos">
-  <h2>👨‍🎓 Alunos</h2>
-  <input type="text" id="buscaAluno" placeholder="Buscar aluno..." onkeyup="filtrarAlunos()">
+<section class="charts">
+  <div class="chart-card">
+    <h3>Progresso dos Alunos</h3>
+    <canvas id="progressChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Quizzes Concluídos por Mês</h3>
+    <canvas id="quizChart"></canvas>
+  </div>
+</section>
+
+<section class="alunos-table">
+  <h2>Alunos - Histórico & Observações</h2>
   <table>
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Email</th>
-        <th>Trilha</th>
+        <th>Curso</th>
         <th>Progresso</th>
-        <th>Quizzes Completos</th>
+        <th>Quizzes Concluídos</th>
+        <th>Observações</th>
       </tr>
     </thead>
-    <tbody id="alunosTabela"></tbody>
+    <tbody>
+      <tr>
+        <td>Ana Souza</td>
+        <td>Marketing Digital</td>
+        <td>95%</td>
+        <td>12</td>
+        <td>Excelente participação, muito engajada</td>
+      </tr>
+      <tr>
+        <td>Lucas Martins</td>
+        <td>Design Gráfico</td>
+        <td>80%</td>
+        <td>9</td>
+        <td>Boa evolução, precisa praticar mais quizzes</td>
+      </tr>
+      <tr>
+        <td>Camila Oliveira</td>
+        <td>Programação Web</td>
+        <td>70%</td>
+        <td>7</td>
+        <td>Dificuldades iniciais, acompanhamento recomendado</td>
+      </tr>
+      <tr>
+        <td>João Pereira</td>
+        <td>Marketing Digital</td>
+        <td>88%</td>
+        <td>10</td>
+        <td>Excelente, sempre participa dos quizzes</td>
+      </tr>
+    </tbody>
   </table>
 </section>
 
-<script src="admin.js"></script>
+<footer>
+  <p>Portal Edu+ Admin Demo - Desenvolvido por Dalton Neres</p>
+</footer>
 
+<script src="admin.js"></script>
 <script>
-function filtrarAlunos() {
-  const busca = document.getElementById('buscaAluno').value.toLowerCase();
-  const linhas = document.querySelectorAll('#alunosTabela tr');
-  linhas.forEach(tr => {
-    const nome = tr.children[0].innerText.toLowerCase();
-    tr.style.display = nome.includes(busca) ? '' : 'none';
+  // Gráfico de progresso
+  const ctx1 = document.getElementById('progressChart').getContext('2d');
+  const progressChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+      datasets: [{
+        label: 'Progresso médio (%)',
+        data: [70, 75, 78, 80, 82, 82],
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.2)',
+        tension:0.3,
+        fill:true,
+        pointRadius:5
+      }]
+    },
+    options: {
+      responsive:true,
+      plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true, max:100}}
+    }
   });
-}
+
+  // Gráfico de quizzes
+  const ctx2 = document.getElementById('quizChart').getContext('2d');
+  const quizChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Jan','Fev','Mar','Abr','Mai','Jun'],
+      datasets: [{
+        label:'Quizzes Concluídos',
+        data:[60, 75, 80, 85, 90, 88],
+        backgroundColor:'#0f766e',
+        borderRadius:5
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true}}
+    }
+  });
 </script>
 
 </body>
