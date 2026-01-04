@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Portal Edu+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<header>
+  <h1>📊 Admin - Portal Edu+</h1>
+  <p>Visualize alunos, trilhas e quizzes em um painel moderno.</p>
+</header>
+
+<section class="dashboard">
+  <div class="kpi">
+    <h3>Total de Alunos</h3>
+    <strong id="totalAlunos">0</strong>
+  </div>
+  <div class="kpi">
+    <h3>Total de Trilhas</h3>
+    <strong id="totalTrilhas">0</strong>
+  </div>
+  <div class="kpi">
+    <h3>Total de Quizzes</h3>
+    <strong id="totalQuizzes">0</strong>
+  </div>
+</section>
+
+<section class="tabela-alunos">
+  <h2>👨‍🎓 Alunos</h2>
+  <input type="text" id="buscaAluno" placeholder="Buscar aluno..." onkeyup="filtrarAlunos()">
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Trilha</th>
+        <th>Progresso</th>
+        <th>Quizzes Completos</th>
+      </tr>
+    </thead>
+    <tbody id="alunosTabela"></tbody>
+  </table>
+</section>
+
+<script src="admin.js"></script>
+
+<script>
+function filtrarAlunos() {
+  const busca = document.getElementById('buscaAluno').value.toLowerCase();
+  const linhas = document.querySelectorAll('#alunosTabela tr');
+  linhas.forEach(tr => {
+    const nome = tr.children[0].innerText.toLowerCase();
+    tr.style.display = nome.includes(busca) ? '' : 'none';
+  });
+}
+</script>
+
+</body>
+</html>
